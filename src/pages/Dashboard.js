@@ -3,8 +3,8 @@ import { Info, Repos, User, Search, Navbar } from '../components';
 import loadingImage from '../images/preloader.gif';
 import { GithubContext, useGlobalContext } from '../context/context';
 const Dashboard = () => {
-  const { value } = useGlobalContext();
-  console.log('value :>> ', value);
+  const { githubUser } = useGlobalContext();
+  console.log('githubUser :>> ', githubUser);
   return (
     <main>
       <Navbar></Navbar>
