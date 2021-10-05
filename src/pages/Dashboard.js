@@ -7,11 +7,11 @@ const Dashboard = () => {
   console.log('githubUser :>> ', githubUser);
   return (
     <main>
-      <Navbar></Navbar>
-      <Search />
+      {/* <Navbar></Navbar> */}
+      {/* <Search /> */}
       <Info />
       <User />
-      <Repos />
+      {/* <Repos /> */}
     </main>
   );
 };
