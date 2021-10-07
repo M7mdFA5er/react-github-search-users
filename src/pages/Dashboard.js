@@ -7,7 +7,7 @@ const Dashboard = () => {
   console.log('githubUser :>> ', githubUser);
   return (
     <main>
-      {/* <Navbar></Navbar> */}
+      <Navbar></Navbar>
       <Search />
       <Info />
       <User />
