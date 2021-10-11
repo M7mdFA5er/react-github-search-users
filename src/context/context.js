@@ -38,15 +38,33 @@ const GithubProvider = ({ children }) => {
 
   const searchGithubUser = async (user) => {
     toggleError();
-    //setLoading(true)
-    const resposne = await axios(`${rootUrl}/users/${user}`)
+    setLoading(true)
+    const response = await axios(`${rootUrl}/users/${user}`)
       .catch(err => console.log('err :>> ', err));
-    if (resposne) {
-      setGithubUser(resposne.data);
+    if (response) {
+      setGithubUser(response.data);
       //More Logic
+      const { login, followers_url } = response.data;
+
+      await Promise.allSettled([
+        axios(`${rootUrl}/users/${login}/repos?per_page=100`),
+        axios(`${followers_url}?per_page=100`)
+      ])
+        .then((results) => {
+          const [repos, followers] = results;
+          const status = 'fulfilled';
+          if (repos.status === status) {
+            setRepos(repos.value.data);
+          }
+          if (followers.status === status) {
+            setFollowers(followers.value.data);
+          }
+        })
     } else {
       toggleError(true, 'there is no user with that username')
     }
+    checkRequests();
+    setLoading(false);
   }
 
   const toggleError = (show = false, msg = '') => {
@@ -56,7 +74,7 @@ const GithubProvider = ({ children }) => {
   useEffect(checkRequests, []);
 
   return (
-    <GithubContext.Provider value={{ githubUser, repos, followers, requests, error, searchGithubUser }}>
+    <GithubContext.Provider value={{ githubUser, repos, followers, requests, error, loading, searchGithubUser }}>
       {children}
     </GithubContext.Provider>
   );
