@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { GithubContext, useGlobalContext } from '../context/context';
+import { useGlobalContext } from '../context/context';
 import { ExampleChart, Pie3D, Column3D, Bar3D, Doughnut2D } from './Charts';
 
 const Repos = () => {
